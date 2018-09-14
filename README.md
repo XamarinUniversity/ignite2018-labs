@@ -1,6 +1,6 @@
-# //Ignite 2018 Workshops by Xamarin University
+# Microsoft Ignite 2018 Workshops by Xamarin University
 
-This repository contains the start/end projects and the instructions used at //Ignite 2018 in Seattle.
+This repository contains the start/end projects and the instructions used at Microsoft Ignite 2018 in Orlando.
 
 ## Labs
 
