@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cvt="clr-namespace:XamarinUniversity.Converters;assembly=XamU.Infrastructure"
+             x:Class="MyCircle.App">
+	<Application.Resources>
+
+        <ResourceDictionary>
+            <cvt:NotBooleanConverter x:Key="NotBooleanConverter" />
+            <Color x:Key="BlueColor">#FF1E86EA</Color>
+            <cvt:IntegerToBooleanConverter x:Key="GreaterThanOneConverter"  One="False" />
+            <cvt:IntegerToBooleanConverter x:Key="IsOneConverter"  Positive="False" />
+        </ResourceDictionary>
+
+	</Application.Resources>
+</Application>

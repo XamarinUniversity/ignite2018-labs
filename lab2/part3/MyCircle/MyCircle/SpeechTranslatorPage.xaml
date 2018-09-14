@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             x:Class="MyCircle.SpeechTranslatorPage"
+             ios:Page.UseSafeArea="true"             
+             BackgroundColor="{StaticResource BlueColor}">
+    <ContentPage.Content>
+
+        <Grid Margin="20">
+            <Grid IsVisible="{Binding IsTranslating, Converter={StaticResource NotBooleanConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Label Text="Recording Now. Speak in a normal tone of voice and tap the Submit button when you are finished."
+                   FontSize="Medium" HorizontalTextAlignment="Center" TextColor="White"
+                   LineBreakMode="WordWrap" />
+
+                <Image Source="speech.png" Aspect="AspectFit" Grid.Row="1" Margin="20" />
+
+                <Button Grid.Row="2" BackgroundColor="Red" Text="Submit" TextColor="White" 
+                        FontSize="Medium" Command="{Binding StopRecording}" 
+                        WidthRequest="150" HeightRequest="150" CornerRadius="75" 
+                        BorderColor="White" BorderWidth="5"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"/>
+            </Grid>
+
+            <StackLayout VerticalOptions="CenterAndExpand" IsVisible="{Binding IsTranslating}">
+                <Label Text="Translating ... Please Wait ..." LineBreakMode="WordWrap" 
+                       FontSize="Large" TextColor="White" HorizontalTextAlignment="Center" />
+                <ActivityIndicator Color="White" IsRunning="True" IsVisible="True" />
+            </StackLayout>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

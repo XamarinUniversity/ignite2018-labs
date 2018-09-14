@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inf="clr-namespace:XamarinUniversity.Infrastructure;assembly=XamU.Infrastructure"
+             xmlns:cvt="clr-namespace:MyCircle"
+             x:Class="MyCircle.MessagesView" x:Name="theView">
+
+    <FlexLayout Direction="Column">
+        <ListView ItemsSource="{Binding Messages}" ItemTapped="OnMessageSelected" 
+            HasUnevenRows="True" SeparatorVisibility="None" CachingStrategy="RecycleElement"
+            IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshData}" 
+            IsRefreshing="{Binding Messages.IsRefreshing}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" LineBreakMode="WordWrap"
+                                    Text="{Binding Message.Text}" FontSize="Small" 
+                                    TextColor="{Binding Message.Color}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCurrentUser}" Value="True">
+                                        <Setter Property="HorizontalTextAlignment" Value="End" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                                <Label FontSize="Micro" TextColor="#606060" Text="{Binding Author}" />
+                                <Label FontSize="Micro" FontAttributes="Bold" IsVisible="False"
+                                       TextColor="Accent" Text="{Binding DetailCount, StringFormat='({0} responses)'}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding DetailCount, Converter={StaticResource GreaterThanOneConverter}}" Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label FontSize="Micro" FontAttributes="Bold" IsVisible="False"
+                                       TextColor="Accent" Text="{Binding DetailCount, StringFormat='(has a response!)'}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding DetailCount, Converter={StaticResource IsOneConverter}}" Value="True">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <StackLayout.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding IsCurrentUser}" Value="True">
+                                        <Setter Property="HorizontalOptions" Value="End" />
+                                    </DataTrigger>
+                                </StackLayout.Triggers>
+                            </StackLayout>
+
+                            <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" VerticalOptions="Center"
+                                    FontFamily="Segoe UI" FontSize="Large" Text="&#x203A;" TextColor="Accent" 
+                                    IsVisible="{Binding Source={x:Reference theView}, Path=ShowDetails}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Entry x:Name="messageEntry" FlexLayout.Shrink="0" Margin="20" Placeholder="Enter Message"
+            IsEnabled="{Binding Messages.IsRefreshing, Converter={StaticResource NotBooleanConverter}}"
+            Text="{Binding NewMessage, Mode=TwoWay}">
+            <Entry.Behaviors>
+                <inf:EventToCommandBehavior EventName="Completed" Command="{Binding AddMessage}" />
+            </Entry.Behaviors>
+        </Entry>
+
+    </FlexLayout>
+
+</ContentView>

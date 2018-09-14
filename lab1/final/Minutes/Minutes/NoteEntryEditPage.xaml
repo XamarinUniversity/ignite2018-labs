@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Minutes.NoteEntryEditPage"
+             Title="{Binding Title}"
+             Padding="20">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Delete" Icon="delete.png" Clicked="OnDeleteEntry" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Title" />
+            <Entry Text="{Binding Title, Mode=TwoWay}" />
+
+            <Label Text="{Binding CreatedDate, StringFormat='Created: {0:g}'}" TextColor="Gray" HorizontalTextAlignment="End" />
+
+            <Label Text="Notes" />
+            <Frame VerticalOptions="FillAndExpand" HasShadow="False" Padding="0">
+                <Frame.OutlineColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="LightGray" />
+                        <On Platform="Android" Value="Transparent" />
+                        <On Platform="UWP" Value="Transparent" />
+                    </OnPlatform>
+                </Frame.OutlineColor>
+                <Editor x:Name="textEditor" Text="{Binding Text, Mode=TwoWay}" />
+            </Frame>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

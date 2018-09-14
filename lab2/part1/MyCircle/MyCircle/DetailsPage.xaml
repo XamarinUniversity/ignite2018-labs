@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:local="clr-namespace:MyCircle"
+             x:Class="MyCircle.DetailsPage"
+             ios:Page.UseSafeArea="true"
+             Title="{Binding Parent.Message.Text}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh" Icon="refresh.png" Command="{Binding RefreshData}" />
+    </ContentPage.ToolbarItems>
+    
+    <FlexLayout Direction="Column">
+        <Frame OutlineColor="LightGray" CornerRadius="0" Margin="5" FlexLayout.Shrink="0">
+            <StackLayout Margin="10">
+                <Label Text="{Binding Parent.Author, StringFormat='On {0} wrote:'}" FontSize="Small" />
+                <Label Text="{Binding Parent.Message.Text}" TextColor="{Binding Parent.Message.Color}" FontSize="Small" />
+            </StackLayout>
+        </Frame>
+
+        <local:MessagesView x:Name="Messages" />
+
+    </FlexLayout>
+</ContentPage>

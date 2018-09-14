@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Name="thePage" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inf="clr-namespace:XamarinUniversity.Infrastructure;assembly=XamU.Infrastructure"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:ctl="clr-namespace:XamarinUniversity.Controls;assembly=XamU.Infrastructure"
+             xmlns:layout="clr-namespace:XamarinUniversity.Layout;assembly=XamU.Infrastructure"
+             xmlns:vm="clr-namespace:MyCircle.ViewModels"
+             x:Class="MyCircle.LoginPage"
+             ios:Page.UseSafeArea="true"             
+             BackgroundColor="{StaticResource BlueColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:Array Type="{x:Type vm:ProfileColorViewModel}" x:Key="ProfileColors">
+                <vm:ProfileColorViewModel Color="#e60073" />
+                <vm:ProfileColorViewModel Color="Red" />
+                <vm:ProfileColorViewModel Color="DarkRed" />
+                <vm:ProfileColorViewModel Color="Purple" />
+                <vm:ProfileColorViewModel Color="Blue" />
+                <vm:ProfileColorViewModel Color="DarkBlue" />
+                <vm:ProfileColorViewModel Color="#006666" />
+                <vm:ProfileColorViewModel Color="#29a329" />
+                <vm:ProfileColorViewModel Color="DarkGreen" />
+                <vm:ProfileColorViewModel Color="#cc5200" />
+                <vm:ProfileColorViewModel Color="#663300" IsSelected="True" />
+                <vm:ProfileColorViewModel Color="#003300" />
+            </x:Array>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <FlexLayout Direction="Column" JustifyContent="SpaceBetween">
+            
+            <Label Text="Welcome to My Circle!" FlexLayout.Shrink="0" Margin="0,20,0,0" 
+                    FontAttributes="Bold" TextColor="White" FontSize="Large"
+                    HorizontalTextAlignment="Center" />
+
+            <Entry FontSize="Medium" Text="{Binding UserName, Mode=TwoWay}"
+                   Placeholder="My Name"  FlexLayout.Shrink="0" Margin="20,0">
+                <Entry.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <OnPlatform.Platforms>
+                            <On Platform="Android" Value="White" />
+                        </OnPlatform.Platforms>
+                    </OnPlatform>
+                </Entry.TextColor>
+                <Entry.PlaceholderColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <OnPlatform.Platforms>
+                            <On Platform="Android" Value="White" />
+                        </OnPlatform.Platforms>
+                    </OnPlatform>
+                </Entry.PlaceholderColor>
+            </Entry>
+
+            <ctl:ItemsControl HorizontalOptions="Center" VerticalOptions="Center" Margin="20" 
+                    ItemsSource="{Binding ProfileColors}" FlexLayout.Basis="50%">
+                <ctl:ItemsControl.ItemsPanel>
+                    <layout:WrapLayout RowSpacing="10" ColumnSpacing="10" />
+                </ctl:ItemsControl.ItemsPanel>
+                <ctl:ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="{Binding Color}" HasShadow="False" 
+                               HeightRequest="65" WidthRequest="65" CornerRadius="0" BorderColor="Transparent">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="BorderColor" Value="Yellow" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference thePage}, Path=BindingContext.SelectProfileColor}" 
+                                                      CommandParameter="{Binding}"/>
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </ctl:ItemsControl.ItemTemplate>
+            </ctl:ItemsControl>
+
+            <Frame Padding="10" BackgroundColor="#50000000" FlexLayout.Shrink="0"
+                   VerticalOptions="End" HorizontalOptions="Fill" OutlineColor="#50000000">
+                <StackLayout>
+                    <Label Text="Enter Your Circle" HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       TextColor="White" FontSize="Medium" />
+                    <Image Source="{inf:ImageResource Source=MyCircle.Images.mycircle.png}" />
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Login}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+        </FlexLayout>
+    </ContentPage.Content>
+</ContentPage>
